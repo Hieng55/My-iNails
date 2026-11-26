@@ -49,7 +49,7 @@ let serviceStart=0;
 const serviceGrid=document.querySelector('.original-service-grid');
 function renderServices(){
   const visible=window.innerWidth<700?1:window.innerWidth<1050?2:3;
-  serviceGrid.innerHTML=Array.from({length:visible},(_,offset)=>serviceItems[(serviceStart+offset)%serviceItems.length]).map(item=>`<article class="original-service-card"><img class="service-photo" src="${item.image}" alt="${item.title}"><div class="service-card-body"><h3>${item.title}</h3><span class="luxury-mark" aria-hidden="true"><svg viewBox="0 0 140 34"><path class="ornament-line" d="M4 17h42M94 17h42"/><path class="sparkle-main" d="M70 2c1.6 9.4 5.6 13.4 15 15-9.4 1.6-13.4 5.6-15 15-1.6-9.4-5.6-13.4-15-15 9.4-1.6 13.4-5.6 15-15Z"/><path class="sparkle-small" d="M50 8c.7 4 2.3 5.6 6.3 6.3-4 .7-5.6 2.3-6.3 6.3-.7-4-2.3-5.6-6.3-6.3 4-.7 5.6-2.3 6.3-6.3ZM92 5c.5 3 1.8 4.3 4.8 4.8-3 .5-4.3 1.8-4.8 4.8-.5-3-1.8-4.3-4.8-4.8 3-.5 4.3-1.8 4.8-4.8Z"/></svg></span><ul class="service-price-list">${item.items.map(([name,price])=>`<li><span>${name}</span><strong>${price}</strong></li>`).join('')}</ul><a class="original-button" href="tel:+15013152344">Call to book</a></div></article>`).join('');
+  serviceGrid.innerHTML=Array.from({length:visible},(_,offset)=>serviceItems[(serviceStart+offset)%serviceItems.length]).map(item=>{const slug=item.title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');return `<article class="original-service-card"><img class="service-photo" src="${item.image}" alt="${item.title}"><div class="service-card-body"><h3>${item.title}</h3><span class="luxury-mark" aria-hidden="true"><svg viewBox="0 0 140 34"><path class="ornament-line" d="M4 17h42M94 17h42"/><path class="sparkle-main" d="M70 2c1.6 9.4 5.6 13.4 15 15-9.4 1.6-13.4 5.6-15 15-1.6-9.4-5.6-13.4-15-15 9.4-1.6 13.4-5.6 15-15Z"/><path class="sparkle-small" d="M50 8c.7 4 2.3 5.6 6.3 6.3-4 .7-5.6 2.3-6.3 6.3-.7-4-2.3-5.6-6.3-6.3 4-.7 5.6-2.3 6.3-6.3ZM92 5c.5 3 1.8 4.3 4.8 4.8-3 .5-4.3 1.8-4.8 4.8-.5-3-1.8-4.3-4.8-4.8 3-.5 4.3-1.8 4.8-4.8Z"/></svg></span><a class="original-button category-book" href="services.html#${slug}">View More</a></div></article>`}).join('');
 }
 document.querySelector('.services-prev').addEventListener('click',()=>{serviceStart=(serviceStart-1+serviceItems.length)%serviceItems.length;renderServices()});
 document.querySelector('.services-next').addEventListener('click',()=>{serviceStart=(serviceStart+1)%serviceItems.length;renderServices()});
@@ -57,7 +57,7 @@ window.addEventListener('resize',renderServices);
 renderServices();
 
 const reviewItems=[
-  {name:'Google Customer 01',text:"Tony takes very good care of me. I have sensitive nail beds and he has never hurt me. When I come to Star Nails I am never disappointed."},
+  {name:'Google Customer 01',text:"My nail technician takes very good care of me. I have sensitive nail beds and always leave happy with the results."},
   {name:'Google Customer 02',text:'I always come here to get my nails and pedicure done. The pedicure and massage are worth every penny, and my nails always look amazing.'},
   {name:'Google Customer 03',text:'Jessica is super talented and the absolute sweetest person ever. The staff is friendly and makes you feel welcome as soon as you walk in.'},
   {name:'Google Customer 04',text:'The salon is clean, relaxing, and everyone is welcoming. They always take their time and make sure I love the final result.'},
@@ -85,7 +85,7 @@ function updateReviewCarousel(rebuildDots=false){
   [...reviewDots.children].forEach((dot,i)=>dot.classList.toggle('is-active',i===reviewIndex));
 }
 function buildReviews(){
-  reviewTrack.innerHTML=reviewItems.map((item,i)=>`<blockquote class="${i%3===1?'featured':''}"><div class="stars" aria-label="5 out of 5 stars">★★★★★</div><p>“${item.text}”</p><footer><img class="google-review-icon" src="assets/google.svg" alt="Google"><span><strong>${item.name}</strong><small>Google Review</small></span></footer></blockquote>`).join('');
+  reviewTrack.innerHTML=reviewItems.map((item,i)=>`<blockquote class="${i%3===1?'featured':''}"><div class="stars" aria-label="5 out of 5 stars">★★★★★</div><p>“${item.text}”</p><footer><img class="google-review-icon" src="https://thesvg.org/icons/google/default.svg" alt="Google"><span><strong>${item.name}</strong><small>Google Review</small></span></footer></blockquote>`).join('');
   updateReviewCarousel(true);
 }
 function nextReviews(){const max=Math.max(0,reviewItems.length-reviewVisible());reviewIndex=reviewIndex>=max?0:reviewIndex+1;updateReviewCarousel()}
@@ -98,7 +98,7 @@ restartReviewTimer();
 
 const galleryItems=Array.from({length:12},(_,i)=>({
   src:`assets/gallery/${i+48}.png`,
-  alt:`My Nails gallery ${i+1}`
+  alt:`My iNails gallery ${i+1}`
 }));
 const galleryGrid=document.querySelector('#gallery-grid');
 const lightbox=document.querySelector('#gallery-lightbox');
